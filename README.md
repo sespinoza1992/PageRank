@@ -1,1 +1,1 @@
-# 466lab3
+# Pagerank algorithm in Python
