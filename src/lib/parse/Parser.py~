@@ -1,0 +1,47 @@
+#parses both 2 column and 4 column style csv files
+#to build nodes in a graph
+
+import csv
+import graph
+import node
+
+#Converts input to ints (may not need this anymore)
+def int_wrapper(reader):
+    for v in reader:
+        yield map(int, v)
+
+#This function parses csv files of states, karate,
+#and dolphin with repeated edges
+def parsefour(filecsv, graph):
+   with open(filecsv) as csvfile:
+      reader = csv.reader(csvfile, delimiter = ',', quotechar = '"') 
+      #parse = ((row[0], row[1], row[2], row[3]) for row in reader)
+      for row in reader:
+          graph.addEdge(row[2], row[0])
+
+#This function parses csv file NCAA_Football
+#and checks values to ensure correct references
+def parsefootball(filecsv, graph):
+   with open(filecsv) as csvfile:
+      reader = csv.reader(csvfile, delimiter = ',', quotechar = '"') 
+      parse = ((row[0], int(row[1]), row[2], int(row[3])) for row in reader)
+      for row in parse:
+          if (row[1] > row[3]
+            graph.addEdge(row[2], row[0])
+          else
+            graph.addEdge(row[0], row[2])
+
+
+#This function parses csv files with format
+#node1, node2 with node1 being fromnodeid 
+#and node2 being tonodeid (node1 points to node 2)         
+def parsetwo(filecsv, graph):
+   with open(filecsv) as csvfile:
+      reader = csv.reader(csvfile, delimiter = ',', quotechar = '"') 
+      #parse = ((row[0], row[1]) for row in reader)
+      for row in reader:
+          graph.addEdge(row[0], row[1])
+
+
+#test lines
+#parsesimple("karate.csv", graph.Graph)
